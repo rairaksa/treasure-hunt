@@ -5,18 +5,26 @@ import (
 	"time"
 )
 
+type coordinate struct {
+	y, x int
+}
+
 var grid[6][8]string // store maps of treasure hunt
 var current_coordinate[2]int // store current coordinate, updated on every step
 var last_top_coordinate[2]int // store last top movement, use when right direction has no move
 var last_right_coordinate[2]int // store last right movement, use when bottom direction has no move
 var last_bottom_coordinate[2]int // unnecessary
 var start_direction string // store first move direction
+var treasure_coordinate = []coordinate{} // store treasure coordinate
+
 
 func main() {
 	initiate()
 	print()
 	find(start_direction)
 	print()
+	fmt.Print("Treasure Coordinate : ")
+	fmt.Println(treasure_coordinate)
 }
 
 // initiate config
@@ -75,7 +83,8 @@ func find(direction string) {
 			// mark coordinate with string "$"
 			grid[current_coordinate[0]][current_coordinate[1]] = "$"
 
-			// store treasury coordinate as array
+			// store treasury coordinate
+			treasure_coordinate = append(treasure_coordinate, coordinate{current_coordinate[0], current_coordinate[1]})
 
 			find("bottom")
 		}
